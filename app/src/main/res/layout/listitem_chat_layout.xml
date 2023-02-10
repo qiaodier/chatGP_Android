@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_ai" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="chatGPT_ai"
+        android:textColor="#333333"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <TextView
+        android:background="@drawable/shape_ai_bg"
+        android:id="@+id/tv_gpt"
+        android:textSize="14sp"
+        android:textColor="#333333"
+        android:layout_width="0dp"
+        android:layout_marginEnd="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="\n\n李小龙（1940年11月27日－1973年7月20日），原名李振藩，祖籍湖南省长沙市，中国电影演员、武术家、导演、编剧、制片人。他是20世纪70年代中国武打片的代表人物，被誉为“中国武打片之父”，被誉为“中国影坛第一巨星”，被誉为“中国功夫之王”。他曾出演过《少林寺》、《猛龙过江》、《龙争虎斗》、《七十二家房客》、《精武门》、《龙虎斗》、《蛇形刁手》、《十三太保》等影片，被誉为“中国武打片之父”。他的武术技巧非常高超，曾被誉为“中国功夫之王”。他的影片曾获得过多项国际大奖，被誉为“中国影坛第一巨星"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+</androidx.constraintlayout.widget.ConstraintLayout>

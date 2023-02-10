@@ -1,0 +1,63 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion rootProject.ext.android['compileSdkVersion']
+    buildToolsVersion rootProject.ext.android['buildToolsVersion']
+
+    defaultConfig {
+
+        minSdkVersion rootProject.ext.android['minSdkVersion']
+        targetSdkVersion rootProject.ext.android['targetSdkVersion']
+        versionCode rootProject.ext.android['versionCode']
+        versionName rootProject.ext.android['versionName']
+
+
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        dataBinding true
+    }
+
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation rootProject.ext.dependencies['androidx-appcompat']
+    implementation 'com.google.android.material:material:1.1.0'
+
+    api rootProject.ext.dependencies['rxlifecycle']
+    api rootProject.ext.dependencies['android-lifecycle-kt']
+    api rootProject.ext.dependencies['rxlifecycle-components']
+//    api rootProject.ext.dependencies['anko-appcompat-v7']
+//    kapt rootProject.ext.dependencies['databinding-compiler']
+    api rootProject.ext.dependencies['lifecycle-extensions']
+    api rootProject.ext.dependencies['lifecycle-runtime']
+    api rootProject.ext.dependencies['toast']
+}
+
+//签名
+//signing {
+//    required { gradle.taskGraph.hasTask("uploadArchives") }
+//    sign configurations.archives
+//}
+
