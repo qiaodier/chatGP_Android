@@ -2,6 +2,7 @@
 基于mvvm架构编写的ChatGPT应用
 
 
+# [申请openai key](https://platform.openai.com/account/api-keys)
 
 ## 版本日志
 ### v1.0
