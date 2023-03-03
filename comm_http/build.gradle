@@ -57,6 +57,7 @@ dependencies {
     api rootProject.ext.dependencies['coroutines']
     api rootProject.ext.dependencies['ktx-core']
     api rootProject.ext.dependencies['lifecycleViewmodelKtx']
+    implementation rootProject.ext.dependencies["lifecycleRuntimeKtx"]
     implementation rootProject.ext.dependencies['toast']
 
 }

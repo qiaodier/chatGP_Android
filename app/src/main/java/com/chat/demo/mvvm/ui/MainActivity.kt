@@ -1,5 +1,8 @@
 package com.chat.demo.mvvm.ui
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chat.demo.adapter.ChatAdapter
 import com.chat.demo.databinding.ActivityMainBinding
@@ -8,6 +11,8 @@ import com.chat.demo.mvvm.model.ChatModel
 import com.chat.demo.mvvm.vm.MainViewModel
 import com.comm.base.ui.BaseActivity
 import com.hjq.toast.ToastUtils
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
@@ -28,26 +33,34 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                 }
                 etContent.setText("")
                 mChatDataList.add(ChatModel(2, inputContent.toString()))
-                if (mChatAdapter?.itemCount ==0){
+                if (mChatAdapter?.itemCount == 0) {
                     mChatAdapter?.setData(mChatDataList)
-                }else{
+                } else {
                     mChatAdapter?.addData(mChatDataList)
                 }
                 mChatDataList.clear()
                 mViewModel.getAiContent(AiReq(inputContent.toString()))
             }
-            mViewModel.getAiResult.observe(this@MainActivity) {
-                mChatDataList.add(ChatModel(1, it))
-                mChatAdapter?.addData(mChatDataList)
-                mChatDataList.clear()
-                recyclerView.scrollToPosition(mChatAdapter?.itemCount ?: (0 - 1))
-            }
         }
     }
 
     override fun initData() {
-
-
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mViewModel.getAiResult.collect {
+                    it.result?.let {
+                        mChatDataList.add(ChatModel(1, it))
+                        mChatAdapter?.addData(mChatDataList)
+                        mChatDataList.clear()
+                        mDataBinding.recyclerView.scrollToPosition(
+                            mChatAdapter?.itemCount ?: (0 - 1)
+                        )
+                    }
+                    it.errorMsg?.let {
+                        showMessage("$it")
+                    }
+                }
+            }
+        }
     }
-
 }

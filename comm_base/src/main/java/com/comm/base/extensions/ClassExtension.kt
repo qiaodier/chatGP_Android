@@ -14,6 +14,7 @@ import androidx.viewbinding.ViewBinding
 import com.comm.base.ui.BaseViewModel
 
 import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Proxy
 import java.text.DecimalFormat
 import kotlin.reflect.KClass
 
@@ -115,4 +116,9 @@ fun String.phoneProcess(): String {
         return this
     }
     return this.replace("(\\d{3})\\d{4}(\\d{4})".toRegex(), "$1****$2")
+}
+
+inline fun <reified T :Any> noOverrideDelegate():T{
+    val javaClass = T::class.java
+    return Proxy.newProxyInstance(javaClass.classLoader, arrayOf(javaClass)){ _, _, _ ->} as T
 }

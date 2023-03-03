@@ -8,31 +8,36 @@ import com.chat.demo.mvvm.repository.MainRepository
 import com.comm.base.ui.BaseViewModel
 import com.comm.http.model.NetResult
 import com.hjq.toast.ToastUtils
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class MainViewModel:BaseViewModel() {
+data class MainUIState(
+    val result: String? = null,
+    val errorMsg: String? = null
+)
+
+class MainViewModel : BaseViewModel() {
 
     private val mainRepository by lazy { MainRepository() }
+    private val mMainUIState by lazy { MainUIState() }
 
-    private var _aiResult = MutableLiveData<String>()
-
-    val getAiResult:LiveData<String>
-        get() = _aiResult
+    private val _aiResult = MutableStateFlow(mMainUIState)
+    val getAiResult: StateFlow<MainUIState>
+        get() = _aiResult.asStateFlow()
 
 
     fun getAiContent(req: AiReq) {
         viewModelScope.launch {
-         val result = mainRepository.getAiContent(req)
-            if (result is NetResult.Success){
-                result.data?.let {
-                    if (it.choices.isNullOrEmpty()) {
-                        _aiResult.postValue("本次响应结果为空")
-                        return@launch
-                    }
-                    _aiResult.postValue(it.choices!![0].text)
+            mainRepository.getAiContent(req).onSuccess {
+                it?.let {
+                    _aiResult.value = mMainUIState.copy(result = it.choices!![0].text)
+                } ?: run {
+                    _aiResult.value = mMainUIState.copy(errorMsg = "响应内容为空")
                 }
-            }else if(result is NetResult.Error){
-                ToastUtils.show("本次响应错误,${result.exception.message}")
+            }.onError {
+                _aiResult.value = mMainUIState.copy(errorMsg = "本次响应错误,${it.message}")
             }
         }
     }

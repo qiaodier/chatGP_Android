@@ -112,7 +112,7 @@ ext {
             "coroutines"              : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${depsVersion.coroutinesVersion}",
             "kt-coroutines-core"      : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${depsVersion.coroutinesVersion}",
             "lifecycleViewmodelKtx"   : "androidx.lifecycle:lifecycle-viewmodel-ktx:${depsVersion.lifecycleViewmodelKtxVersion}",
-
+            "lifecycleRuntimeKtx"   : "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha03",
     ]
 
 
