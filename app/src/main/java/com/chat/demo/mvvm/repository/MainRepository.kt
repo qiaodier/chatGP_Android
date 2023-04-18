@@ -7,7 +7,7 @@ import com.comm.http.repository.BaseRepository
 
 class MainRepository:BaseRepository() {
 
-    private val mRequestApi by lazy { RequestCreator.instance.get(MainApi::class.java) }
+    private val mRequestApi by lazy { mRequestClient.get(MainApi::class.java) }
 
     suspend fun getAiContent(req: AiReq) = callRequest {
         handleResponse(

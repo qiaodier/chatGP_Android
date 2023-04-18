@@ -1,8 +1,6 @@
 package com.comm.http
 
-import androidx.lifecycle.MutableLiveData
 import com.comm.http.base.IRequestOkConfig
-import com.comm.http.live.LiveDataCallAdapterFactory
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -25,7 +23,6 @@ class RequestCreator {
     private val READ_TIMEOUT = 60;
     private lateinit var mRetrofit: Retrofit
     private lateinit var okHttpClient:OkHttpClient
-    private var isLoading: MutableLiveData<Boolean> = MutableLiveData()
     lateinit var iRequestOkConfig: IRequestOkConfig
     /**
      * 静态内部类实现单例
@@ -36,13 +33,6 @@ class RequestCreator {
 
     private object SingletonHolder {
         val holder = RequestCreator()
-    }
-
-    /**
-     * 获取loading 状态
-     */
-    fun getLoadingStatus():MutableLiveData<Boolean>{
-        return isLoading
     }
 
     /**
@@ -59,11 +49,6 @@ class RequestCreator {
      */
     fun <T> get(service: Class<T>): T {
         return mRetrofit.create(service)
-    }
-
-
-    fun getOkClient():OkHttpClient{
-        return okHttpClient;
     }
 
     /**
@@ -94,8 +79,6 @@ class RequestCreator {
             .addConverterFactory(GsonConverterFactory.create())
             //使用rxjava处理网络响应数据
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            //使用livedata处理网络响应数据
-            .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
 
         return client

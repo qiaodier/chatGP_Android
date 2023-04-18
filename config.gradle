@@ -1,7 +1,7 @@
 ext {
     //app基础配置
     android = [
-            "applicationId"            : "com.sina.rice",
+            "applicationId"            : "com.chat.demo",
             "compileSdkVersion"        : 31,
             "buildToolsVersion"        : "30.0.2",
             "minSdkVersion"            : 24,

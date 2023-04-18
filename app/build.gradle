@@ -6,7 +6,7 @@ plugins {
 android {
     compileSdk rootProject.ext.android['compileSdkVersion']
     defaultConfig {
-        applicationId "com.chat.demo"
+        applicationId rootProject.ext.android['applicationId']
         minSdk rootProject.ext.android['minSdkVersion']
         targetSdk rootProject.ext.android['targetSdkVersion']
         versionCode 1
