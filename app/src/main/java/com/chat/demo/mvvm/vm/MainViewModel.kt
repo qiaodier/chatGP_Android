@@ -1,5 +1,6 @@
 package com.chat.demo.mvvm.vm
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -40,5 +41,10 @@ class MainViewModel : BaseViewModel() {
                 _aiResult.value = mMainUIState.copy(errorMsg = "本次响应错误,${it.message}")
             }
         }
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        Log.e(TAG, "onCreate: ")
     }
 }

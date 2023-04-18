@@ -66,6 +66,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewDataBinding> : RxAppCom
         setContentView(mDataBinding.root)
 //        mViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application)
 //            .create(iniViewModelClass())
+        lifecycle.addObserver(mViewModel)
         initTitleBar()
         setCommTitleRightIcon(0)
         setShowLeftText(false)
