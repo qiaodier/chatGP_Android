@@ -19,8 +19,8 @@ class RequestCreator {
      */
     init { }
 
-    private val CONNECT_TIMEOUT = 60;
-    private val READ_TIMEOUT = 60;
+    private val CONNECT_TIMEOUT = 10;
+    private val READ_TIMEOUT = 10;
     private lateinit var mRetrofit: Retrofit
     private lateinit var okHttpClient:OkHttpClient
     lateinit var iRequestOkConfig: IRequestOkConfig

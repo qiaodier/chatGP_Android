@@ -7,15 +7,18 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.comm.base.extensions.getViewBinding
 import com.comm.base.extensions.getViewModel
 import com.comm.base.utils.LogUtils
 import com.comm.base.utils.StatusBarColorUtil
 import com.hjq.toast.ToastUtils
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 
 /**
@@ -23,7 +26,7 @@ import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
  *@date 21-4-2 上午9:59
  *@desc baseActivity Activity的基类
  */
-abstract class BaseActivity<VM : BaseViewModel, VB : ViewDataBinding> : RxAppCompatActivity() {
+abstract class BaseActivity<VM : BaseViewModel<*>, VB : ViewDataBinding> : RxAppCompatActivity() {
 
     val TAG = this.javaClass.name
 //    private lateinit var loadingDialog: LoadingDialog
@@ -66,7 +69,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewDataBinding> : RxAppCom
         setContentView(mDataBinding.root)
 //        mViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application)
 //            .create(iniViewModelClass())
-        lifecycle.addObserver(mViewModel)
+//        lifecycle.addObserver(mViewModel)
         initTitleBar()
         setCommTitleRightIcon(0)
         setShowLeftText(false)
@@ -210,7 +213,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewDataBinding> : RxAppCom
      * 点击事件
      */
     fun View.onClick(onClick:(view:View) ->Unit){
-        setOnClickListener(onClick)
+        this.setOnClickListener(onClick)
     }
 
     /**
@@ -221,6 +224,16 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewDataBinding> : RxAppCom
             View.VISIBLE
         }else{
             View.GONE
+        }
+    }
+
+    fun repeatOnLifecycleCreated(
+        block: suspend CoroutineScope.() -> Unit
+    ) {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                block.invoke(this)
+            }
         }
     }
 

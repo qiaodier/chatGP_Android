@@ -8,8 +8,11 @@ import com.chat.demo.adapter.ChatAdapter
 import com.chat.demo.databinding.ActivityMainBinding
 import com.chat.demo.mvvm.model.AiReq
 import com.chat.demo.mvvm.model.ChatModel
+import com.chat.demo.mvvm.vm.MainUIState
 import com.chat.demo.mvvm.vm.MainViewModel
 import com.comm.base.ui.BaseActivity
+import com.comm.base.ui.BaseUIState
+import com.comm.base.ui.BaseViewModel
 import com.hjq.toast.ToastUtils
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -18,6 +21,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     private var mChatAdapter: ChatAdapter? = null
     private var mChatDataList = mutableListOf<ChatModel>()
+
     override fun initViews() {
         setCommTitleLeftIcon(0)
         setCommTitleText("ChatGPT")
@@ -47,7 +51,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun initData() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mViewModel.getAiResult.collect {
+                mViewModel.mainUIState.collect {
                     it.result?.let {
                         mChatDataList.add(ChatModel(1, it))
                         mChatAdapter?.addData(mChatDataList)

@@ -14,7 +14,7 @@ import com.comm.base.extensions.getViewModel
 import com.hjq.toast.ToastUtils
 
 
-abstract class BaseFragment<VM : BaseViewModel, VB : ViewDataBinding> : Fragment() {
+abstract class BaseFragment<VM : BaseViewModel<BaseUIState>, VB : ViewDataBinding> : Fragment() {
     val TAG = this.javaClass.name
     protected lateinit var mViewModel: VM
     protected lateinit var mViewBinding: VB

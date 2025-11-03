@@ -1,30 +1,39 @@
 package com.comm.base.ui
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.comm.base.lifecycle.BaseLifecycleObserver
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 /**
  *@author qiaohao
  *@date 21-4-2 上午10:25
  *
  */
-abstract class BaseViewModel:ViewModel(), BaseLifecycleObserver {
+abstract class BaseViewModel<U: BaseUIState>(
+    private val createState: () -> U
+) : ViewModel() {
 
     val TAG = this.javaClass.name
 
-    // 子类的viewmodel中可以选择实现某个生命周期回调方法
-    override fun onCreate() {}
+    protected val mUIState :U by lazy { createState() }
+    protected val _UIState = MutableStateFlow(mUIState)
+    val mainUIState: StateFlow<U>
+        get() = _UIState.asStateFlow()
 
-    override fun onStart() {}
+    fun <T : U> emitUIState(newState: T) {
+        _UIState.value = newState
+    }
 
-    override fun onResume() {}
+    fun launchInViewModelScope(
+        block: suspend CoroutineScope.() -> Unit
+    ) {
+        viewModelScope.launch {
+            block.invoke(this)
+        }
+    }
 
-    override fun onPause() {}
-
-    override fun onStop() {}
-
-    override fun onDestroy() {}
-
-    override fun onAny() {}
 }

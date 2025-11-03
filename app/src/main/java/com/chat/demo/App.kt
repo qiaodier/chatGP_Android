@@ -1,7 +1,9 @@
 package com.chat.demo
 
 import android.app.Application
+import androidx.startup.AppInitializer
 import com.chat.demo.net.RequestConfigImpl
+import com.chat.demo.start.DemoInitializer
 import com.chat.demo.utils.CustomLogCatStrategy
 import com.comm.http.RequestCreator
 import com.hjq.toast.ToastUtils
@@ -15,8 +17,6 @@ class App:Application() {
     override fun onCreate() {
         super.onCreate()
         initLogger()
-        //初始化网络请求拦截器
-        RequestCreator.instance.initConfig(RequestConfigImpl())
         //吐司初始化
         ToastUtils.init(this)
     }

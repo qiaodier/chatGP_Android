@@ -51,7 +51,8 @@ dependencies {
 //    api rootProject.ext.dependencies['anko-appcompat-v7']
 //    kapt rootProject.ext.dependencies['databinding-compiler']
     api rootProject.ext.dependencies['lifecycle-extensions']
-    api rootProject.ext.dependencies['lifecycle-runtime']
+    api rootProject.ext.dependencies['lifecycleRuntimeKtx']
+    api rootProject.ext.dependencies['lifecycleViewmodelKtx']
     api rootProject.ext.dependencies['toast']
 }
 

@@ -63,7 +63,7 @@ abstract class BaseViewAdapter<V :ViewDataBinding,T, VH : BaseViewHolder<V>> : R
     }
 
     override fun getItemCount(): Int {
-        return dataList?.size
+        return dataList.size
     }
 
 

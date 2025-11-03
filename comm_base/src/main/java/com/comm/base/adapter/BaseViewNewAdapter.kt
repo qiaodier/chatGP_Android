@@ -55,7 +55,7 @@ abstract class BaseViewNewAdapter<V :ViewDataBinding,B> : RecyclerView.Adapter<B
     }
 
     override fun getItemCount(): Int {
-        return dataList?.size
+        return dataList.size
     }
 
 

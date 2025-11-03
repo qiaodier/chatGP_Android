@@ -10,6 +10,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.viewbinding.ViewBinding
+import com.comm.base.ui.BaseUIState
 
 import com.comm.base.ui.BaseViewModel
 
@@ -28,7 +29,7 @@ inline fun <VB : ViewBinding> Any.getViewBinding(inflater: LayoutInflater, posit
 }
 
 //activity/fragment 获取viewmodel 该方法是viewmodel 构造器无参的情况下
-inline fun <VM : BaseViewModel> Any.getViewModel(activity: Activity, position: Int = 0): VM {
+inline fun <VM : BaseViewModel<BaseUIState>> Any.getViewModel(activity: Activity, position: Int = 0): VM {
     val vbClass =
         (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments.filterIsInstance<Class<VM>>()
     return ViewModelProvider.AndroidViewModelFactory.getInstance(activity.application)

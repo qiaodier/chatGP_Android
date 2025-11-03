@@ -23,7 +23,7 @@ class LogUtils {
     }
 
 
-    var logEnable = false
+    var logEnable = true
 
 
     fun d(tag:String,content:()->String){
